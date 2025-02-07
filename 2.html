@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Generator</title>
+    <style>
+    body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+    .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+    h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+    .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        margin-right: 10px;
+        width: 40%; /* Adjust to desired label width */
+        text-align: left;
+    }
+
+    .form-group input, .form-group select {
+        padding: 10px;
+        width: 50%; /* Adjust input width */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+            background-color: green;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+    button:hover {
+        background-color: darkgreen;
+    }
+
+    .error {
+        color: red;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .output-box {
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: #f1f1f1;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        min-height: 10px;
+    
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Ensure responsiveness */
+    @media (max-width: 600px) {
+        h2 {
+            font-size: 1.2em;
+        }
+
+        .form-group input, .form-group select {
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .container {
+            padding: 15px;
+            width: 90%;  /* Use more width on smaller screens */
+            max-width: 100%;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    }
+
+    .date-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .date-container label {
+        width: 45%;
+        text-align: left;
+    }
+
+    .date-container input {
+        width: 45%;
+    }
+   header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        header nav ul {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        header nav ul li a:hover {
+            text-decoration: underline;
+        }
+.note {
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #999;
+        font-size: 16px;
+        font-family: Arial, sans-serif;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Make the container take up full height of the viewport */
+    }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+<header>
+  <nav>
+    <ul>
+      <li><a href="0.html">Name</a></li>
+      <li><a href="1.html">ID & Telephone</a></li>
+      <li><a href="3.html">Address</a></li>
+      <li><a href="2.html">Account</a></li>
+    </ul>
+  </nav>
+</header>
+    
+        <h2>Accounts Segment</h2>
+        <form id="form">
+            <!-- 1st section (fixed) -->
+            <input type="text" id="section1" value="TL04T0010110NB955500010209YUVARAJFI0315" class="hidden">
+
+            <!-- 2nd section (input: 15 bytes, numbers only) -->
+            <div class="form-group">
+                <label for="section2">LOAN ID:</label>
+                <input type="text" id="section2" maxlength="15" pattern="\d*" required><br>
+                <span id="error-section2" class="error hidden">This field is required and should be numeric.</span>
+            </div>
+
+            <!-- 3rd section (fixed) -->
+            <input type="text" id="section3" value="040241" class="hidden">
+
+            <!-- 4th section (fixed) -->
+            <input type="text" id="section4" value="0501" class="hidden">
+
+            <!-- 5th section (selection panel) -->
+            <div class="form-group">
+                <label for="section5">Ownership Indicator:</label>
+                <select id="section5" required>
+                    <option value="1">Individual</option>
+                    <option value="2">Authorised User</option>
+                    <option value="3">Guarantor</option>
+                    <option value="4">Joint</option>
+                    <option value="5">Deceased</option>
+                </select><br><br>
+                <span id="error-section5" class="error hidden">This field is required.</span>
+            </div>
+
+            <!-- 6th section (fixed) -->
+            <input type="text" id="section6" value="0808" class="hidden">
+
+            <!-- 7th section (date selector) -->
+            <div class="date-container">
+                <label for="section7">Date Opened/Disbursed:</label>
+                <input type="date" id="section7" required>
+                <span id="error-section7" class="error hidden">This field is required.</span>
+            </div>
+
+            <!-- 8th section (fixed) -->
+            <input type="text" id="section8" value="0908" class="hidden">
+
+            <!-- 9th section (date selector) -->
+            <div class="date-container">
+                <label for="section9">Date of Last Payment:</label>
+                <input type="date" id="section9" required>
+                <span id="error-section9" class="error hidden">This field is required.</span>
+            </div>
+
+            <!-- 10th section (fixed) -->
+            <input type="text" id="section10" value="1008" class="hidden">
+
+            <!-- 11th section (date selector) -->
+            <div class="date-container">
+                <label for="section11">Date Closed:</label>
+                <input type="date" id="section11" required>
+                <span id="error-section11" class="error hidden">This field is required.</span>
+            </div>
+
+            <!-- 12th section (fixed) -->
+            <input type="text" id="section12" value="1108" class="hidden">
+
+            <!-- 13th section (date selector) -->
+            <div class="date-container">
+                <label for="section13">Date Reported and Certified:</label>
+                <input type="date" id="section13" required>
+                <span id="error-section13" class="error hidden">This field is required.</span>
+            </div>
+
+            <!-- 14th section (fixed) -->
+            <input type="text" id="section14" value="12" class="hidden">
+
+            <!-- 15th section (length of the 16th section) (hidden) -->
+            <input type="text" id="section15" readonly class="hidden">
+
+            <!-- 16th section (input box, numbers only) -->
+            <div class="form-group">
+                <label for="section16">High Credit/Sanctioned Amount:</label>
+                <input type="text" id="section16" pattern="\d*" required oninput="updateSection15()">
+                <span id="error-section16" class="error hidden">This field is required and should be numeric.</span>
+            </div>
+
+            <!-- 17th section (fixed) -->
+            <input type="text" id="section17" value="13" class="hidden">
+
+            <!-- 18th section (length of the 19th section) (hidden) -->
+            <input type="text" id="section18" readonly class="hidden">
+
+            <!-- 19th section (input box, numbers only) -->
+            <div class="form-group">
+                <label for="section19">Current Balance:</label>
+                <input type="text" id="section19" pattern="\d*" required oninput="updateSection18()">
+                <span id="error-section19" class="error hidden">This field is required and should be numeric.</span>
+            </div>
+
+            <!-- 20th section (fixed) -->
+            <input type="text" id="section20" value="14" class="hidden">
+
+            <!-- 21st section (length of the 22nd section) (hidden) -->
+            <input type="text" id="section21" readonly class="hidden">
+
+            <!-- 22nd section (input box, numbers only) -->
+            <div class="form-group">
+                <label for="section22">Amount Overdue:</label>
+                <input type="text" id="section22" pattern="\d*" required oninput="updateSection21()">
+                <span id="error-section22" class="error hidden">This field is required and should be numeric.</span>
+            </div>
+
+            <!-- 23rd section (fixed) -->
+            <input type="text" id="section23" value="15" class="hidden">
+
+            <!-- 24th section (length of the 25th section) (hidden) -->
+            <input type="text" id="section24" readonly class="hidden">
+
+            <!-- 25th section (input box, numbers only) -->
+            <div class="form-group">
+                <label for="section25">Number of Days Past Due:</label>
+                <input type="text" id="section25" pattern="\d*" required oninput="updateSection24()">
+                <span id="error-section25" class="error hidden">This field is required and should be numeric.</span>
+            </div>
+
+            <!-- 26th section (fixed) -->
+            <input type="text" id="section26" value="40" class="hidden">
+
+            <!-- 27th section (length of the 28th section) (hidden) -->
+            <input type="text" id="section27" readonly class="hidden">
+
+            <!-- 28th section (input box, numbers only) -->
+            <div class="form-group">
+                <label for="section28">EMI Amount:</label>
+                <input type="text" id="section28" pattern="\d*" required oninput="updateSection27()">
+                <span id="error-section28" class="error hidden">This field is required and should be numeric.</span>
+            </div>
+
+            <!-- 29th section (fixed) -->
+            <input type="text" id="section29" value="ES02**" class="hidden">
+
+            <!-- Submit Button -->
+            <button type="button" onclick="generateOutput()">Generate</button>
+            <!-- Refresh Button -->
+            <button type="button" onclick="resetForm()">Refresh</button>
+        </form>
+
+        <!-- Output Box -->
+        
+        <textarea id="outputBox" rows="4" cols="70" ></textarea>
+    </div>
+<div><p class="note">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;End of the cibil report use "TRLR"</p>
+  </div>
+    <script>
+        function formatDate(date) {
+            const d = new Date(date);
+            const day = d.getDate().toString().padStart(2, '0');
+            const month = (d.getMonth() + 1).toString().padStart(2, '0');
+            const year = d.getFullYear();
+            return day + month + year;
+        }
+
+        function updateSection15() {
+            const section16Value = document.getElementById('section16').value;
+            const section15Length = section16Value.length.toString().padStart(2, '0');
+            document.getElementById('section15').value = section15Length;
+        }
+
+        function updateSection18() {
+            const section19Value = document.getElementById('section19').value;
+            const section18Length = section19Value.length.toString().padStart(2, '0');
+            document.getElementById('section18').value = section18Length;
+        }
+
+        function updateSection21() {
+            const section22Value = document.getElementById('section22').value;
+            const section21Length = section22Value.length.toString().padStart(2, '0');
+            document.getElementById('section21').value = section21Length;
+        }
+
+        function updateSection24() {
+            const section25Value = document.getElementById('section25').value;
+            const section24Length = section25Value.length.toString().padStart(2, '0');
+            document.getElementById('section24').value = section24Length;
+        }
+
+        function updateSection27() {
+            const section28Value = document.getElementById('section28').value;
+            const section27Length = section28Value.length.toString().padStart(2, '0');
+            document.getElementById('section27').value = section27Length;
+        }
+
+        function resetForm() {
+            document.getElementById('form').reset();
+            const errors = document.querySelectorAll('.error');
+            errors.forEach(function(error) {
+                error.classList.add('hidden');
+            });
+        }
+
+        function generateOutput() {
+            const section2 = document.getElementById('section2').value;
+            const section5 = document.getElementById('section5').value;
+            const section7 = document.getElementById('section7').value;
+            const section9 = document.getElementById('section9').value;
+            const section11 = document.getElementById('section11').value;
+            const section13 = document.getElementById('section13').value;
+            const section15 = document.getElementById('section15').value;
+            const section16 = document.getElementById('section16').value;
+            const section18 = document.getElementById('section18').value;
+            const section19 = document.getElementById('section19').value;
+            const section21 = document.getElementById('section21').value;
+            const section22 = document.getElementById('section22').value;
+            const section24 = document.getElementById('section24').value;
+            const section25 = document.getElementById('section25').value;
+            const section27 = document.getElementById('section27').value;
+            const section28 = document.getElementById('section28').value;
+
+            // Validation
+            let isValid = true;
+            if (!section2 || !/^\d+$/.test(section2)) {
+                document.getElementById('error-section2').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section2').classList.add('hidden');
+            }
+            if (!section5) {
+                document.getElementById('error-section5').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section5').classList.add('hidden');
+            }
+            if (!section7) {
+                document.getElementById('error-section7').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section7').classList.add('hidden');
+            }
+            if (!section9) {
+                document.getElementById('error-section9').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section9').classList.add('hidden');
+            }
+            if (!section11) {
+                document.getElementById('error-section11').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section11').classList.add('hidden');
+            }
+            if (!section13) {
+                document.getElementById('error-section13').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section13').classList.add('hidden');
+            }
+            if (!section16 || !/^\d+$/.test(section16)) {
+                document.getElementById('error-section16').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section16').classList.add('hidden');
+            }
+            if (!section19 || !/^\d+$/.test(section19)) {
+                document.getElementById('error-section19').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section19').classList.add('hidden');
+            }
+            if (!section22 || !/^\d+$/.test(section22)) {
+                document.getElementById('error-section22').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section22').classList.add('hidden');
+            }
+            if (!section25 || !/^\d+$/.test(section25)) {
+                document.getElementById('error-section25').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section25').classList.add('hidden');
+            }
+            if (!section28 || !/^\d+$/.test(section28)) {
+                document.getElementById('error-section28').classList.remove('hidden');
+                isValid = false;
+            } else {
+                document.getElementById('error-section28').classList.add('hidden');
+            }
+
+            // If all fields are valid, generate output
+            if (isValid) {
+                const formattedDate7 = formatDate(section7);
+                const formattedDate9 = formatDate(section9);
+                const formattedDate11 = formatDate(section11);
+                const formattedDate13 = formatDate(section13);
+
+                const output = `TL04T0010110NB955500010209YUVARAJFI0315${section2}0402410501${section5}0808${formattedDate7}0908${formattedDate9}1008${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
+                document.getElementById('outputBox').value = output;
+            }
+        }
+    </script>
+</body>
+</html>

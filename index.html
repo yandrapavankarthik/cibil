@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cibil Report Generator - Login</title>
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>Cibil Report Generator</h2>
+        <form id="login-form">
+            <input type="text" class="input-box" id="username" placeholder="Enter Username" required><br>
+            <div class="password-container">
+                <input type="password" class="input-box" id="password" placeholder="Enter Password" required>
+                <span id="eye-icon" class="eye-icon" onclick="togglePassword()">&#128065;</span> <!-- Unicode Eye symbol -->
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+            <p id="error-message" class="error-message"></p> <!-- Error message will appear here -->
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

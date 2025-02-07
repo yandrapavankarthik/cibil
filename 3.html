@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Address Formatter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            margin: 5px 0;
+            display: block;
+            text-align: left;
+        }
+
+        input, select, button {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        .output-box {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            min-height: 50px;
+            white-space: pre-wrap;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .button-container button {
+            width: 30%;
+        }
+
+        .address-input-container {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .address-input-container.active {
+            display: block;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            padding-right: 30px;
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+    header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        header nav ul {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        header nav ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+<header>
+  <nav>
+    <ul>
+      <li><a href="0.html">Name</a></li>
+      <li><a href="1.html">ID & Telephone</a></li>
+      <li><a href="3.html">Address</a></li>
+      <li><a href="2.html">Account</a></li>
+    </ul>
+  </nav>
+</header>
+        <h2>Address Segment</h2>
+
+        <form id="addressForm">
+            <!-- Address Input Section for Address 1 -->
+            <div id="address1Input" class="address-input-container active">
+                <label for="address1">Enter Address 1:</label>
+                <input type="text" id="address1" placeholder="Enter Address 1">
+            </div>
+
+            <!-- Address 2 Input Section -->
+            <div id="address2Input" class="address-input-container">
+                <label for="address2">Enter Address 2:</label>
+                <input type="text" id="address2" placeholder="Enter Address 2">
+            </div>
+
+            <!-- Address 3 Input Section -->
+            <div id="address3Input" class="address-input-container">
+                <label for="address3">Enter Address 3:</label>
+                <input type="text" id="address3" placeholder="Enter Address 3">
+            </div>
+
+            <!-- Address 1, 2, 3 Buttons -->
+            <div class="button-container">
+                <button type="button" onclick="showAddressInput(1)">Address 1</button>
+                <button type="button" onclick="showAddressInput(2)">Address 2</button>
+                <button type="button" onclick="showAddressInput(3)">Address 3</button>
+            </div>
+
+            <!-- Region Selection (All Regions) with Search -->
+            <label for="region">Select State:</label>
+            <div class="search-container">
+                <input type="text" id="regionSearch" class="search-input" placeholder="Search for state..." oninput="filterRegion()">
+               <select id="region" size="5">
+    <option value="01">Jammu & Kashmir</option>
+    <option value="02">Himachal Pradesh</option>
+    <option value="03">Punjab</option>
+    <option value="04">Chandigarh</option>
+    <option value="05">Uttaranchal</option>
+    <option value="06">Haryana</option>
+    <option value="07">Delhi</option>
+    <option value="08">Rajasthan</option>
+    <option value="09">Uttar Pradesh</option>
+    <option value="10">Bihar</option>
+    <option value="11">Sikkim</option>
+    <option value="12">Arunachal Pradesh</option>
+    <option value="13">Nagaland</option>
+    <option value="14">Manipur</option>
+    <option value="15">Mizoram</option>
+    <option value="16">Tripura</option>
+    <option value="17">Meghalaya</option>
+    <option value="18">Assam</option>
+    <option value="19">West Bengal</option>
+    <option value="20">Jharkhand</option>
+    <option value="21">Orissa</option>
+    <option value="22">Chhattisgarh</option>
+    <option value="23">Madhya Pradesh</option>
+    <option value="24">Gujarat</option>
+    <option value="25">Daman & Diu</option>
+    <option value="26">Dadra & Nagar Haveli</option>
+    <option value="27">Maharashtra</option>
+    <option value="28">Andhra Pradesh</option>
+    <option value="29">Karnataka</option>
+    <option value="30">Goa</option>
+    <option value="31">Lakshadweep</option>
+    <option value="32">Kerala</option>
+    <option value="33">Tamil Nadu</option>
+    <option value="34">Pondicherry</option>
+    <option value="35">Andaman & Nicobar Islands</option>
+    <option value="36">Telangana</option>
+    <option value="99">APO Address</option>
+</select>
+
+            </div>
+
+            <!-- Section for 5th Input -->
+            <label for="fifthInput">Enter Pincode:</label>
+            <input type="text" id="fifthInput" placeholder="Enter 6 digits pincode">
+
+            <!-- Address Type Selection -->
+            <label for="addressType">Select Address Type:</label>
+            <select id="addressType">
+                <option value="01">Permanent Address</option>
+                <option value="02">Residence Address</option>
+                <option value="03">Office Address</option>
+                <option value="04">Not Categorized</option>
+                <option value="05">Mortgage Property Address</option>
+            </select>
+
+            <!-- Generate Button -->
+            <button type="button" onclick="generateAddress()">Generate</button>
+        </form>
+
+        <div id="outputBox" class="output-box"></div>
+    </div>
+
+    <script>
+        // Function to show the input field for the selected address
+        function showAddressInput(addressType) {
+            // Hide all address input fields
+            document.querySelectorAll('.address-input-container').forEach((el) => {
+                el.classList.remove('active');
+            });
+
+            // Show the selected address input field
+            if (addressType === 1) {
+                document.getElementById('address1Input').classList.add('active');
+            } else if (addressType === 2) {
+                document.getElementById('address2Input').classList.add('active');
+            } else if (addressType === 3) {
+                document.getElementById('address3Input').classList.add('active');
+            }
+        }
+
+        // Function to filter region options based on input
+        function filterRegion() {
+            const searchValue = document.getElementById("regionSearch").value.toLowerCase();
+            const options = document.getElementById("region").options;
+            for (let i = 0; i < options.length; i++) {
+                const optionText = options[i].text.toLowerCase();
+                options[i].style.display = optionText.includes(searchValue) ? "" : "none";
+            }
+        }
+
+        // Function to format the address and generate the final result
+        function formatAddress(address) {
+            // Check if address is empty
+            if (!address) {
+                return '';
+            }
+
+            // Remove special characters (commas, slashes, dashes, etc.)
+            const filteredAddress = address.replace(/[^a-zA-Z0-9\s]/g, '');
+
+            // Split the address into words
+            const words = filteredAddress.split(/\s+/);
+
+            let formattedAddress = '';
+            let currentLength = 0;
+
+            // Add words to the formatted address until it reaches 40 bytes
+            for (let i = 0; i < words.length; i++) {
+                // Check if adding this word exceeds 40 bytes
+                if ((currentLength + words[i].length + (formattedAddress ? 1 : 0)) <= 40) {
+                    // If it fits, add it to the formatted address
+                    formattedAddress += (formattedAddress ? ' ' : '') + words[i];
+                    currentLength += words[i].length + (formattedAddress ? 1 : 0); // 1 for the space
+                } else {
+                    // If adding the next word exceeds 40 bytes, stop
+                    break;
+                }
+            }
+
+            // If the formatted address is less than 40 bytes, fill with spaces
+            if (currentLength < 40) {
+                formattedAddress = formattedAddress.padEnd(40, ' ');
+            }
+
+            return formattedAddress;
+        }
+
+        // Main function to generate the complete address
+        function generateAddress() {
+            const fixedPart1 = "PA03A010140";  // Fixed first section
+            const fixedPart2 = "0240"; // Address 2 fixed part
+            const fixedPart3 = "0340"; // Address 3 fixed part
+
+            // Get the addresses
+            const address1 = document.getElementById('address1').value.trim();
+            const address2 = document.getElementById('address2').value.trim();
+            const address3 = document.getElementById('address3').value.trim();
+
+            // Format the addresses
+            const formattedAddress1 = formatAddress(address1);
+            const formattedAddress2 = formatAddress(address2);
+            const formattedAddress3 = formatAddress(address3);
+
+            // Error check to ensure at least one address is entered
+            if (!formattedAddress1) return;
+
+            let finalResult = fixedPart1 + formattedAddress1; // Address 1
+
+            if (formattedAddress2) {
+                finalResult += fixedPart2 + formattedAddress2; // Address 2
+            }
+            if (formattedAddress3) {
+                finalResult += fixedPart3 + formattedAddress3; // Address 3
+            }
+
+            // Get the values for region and fifth input
+            const region = document.getElementById('region').value;
+            const fifthInput = document.getElementById('fifthInput').value.trim();
+            const addressType = document.getElementById('addressType').value;
+
+            // Validate fifth input to ensure it's a number and has a length of 6
+            if (!/^\d{6}$/.test(fifthInput)) {
+                alert('Please enter exactly 6 digits for the 5th section.');
+                return;
+            }
+
+            // Validate length of the fifth input (cannot be more than 10 characters)
+            if (fifthInput.length > 10) {
+                alert('Input for the 5th section cannot be more than 10 characters.');
+                return;
+            }
+
+            const fifthSectionLength = fifthInput.length.toString().padStart(2, '0');
+            let addressTypeCode = '';
+
+            switch (addressType) {
+                case '01':
+                    addressTypeCode = '01'; // Permanent Address
+                    break;
+                case '02':
+                    addressTypeCode = '02'; // Residence Address
+                    break;
+                case '03':
+                    addressTypeCode = '03'; // Office Address
+                    break;
+                case '04':
+                    addressTypeCode = '04'; // Not Categorized
+                    break;
+                case '05':
+                    addressTypeCode = '05'; // Mortgage Property Address
+                    break;
+                default:
+                    addressTypeCode = '00'; // Default case, should not happen
+                    break;
+            }
+
+            // Final result string
+            const fixedPart1_2 = "0602";
+            const fixedPart2_2 = "07";
+            const fixedPart3_2 = "0802";
+            const finalResult2 = `${fixedPart1_2}${region}${fixedPart2_2}${fifthSectionLength}${fifthInput}${fixedPart3_2}${addressTypeCode}`;
+
+            const outputBox = document.getElementById('outputBox');
+            outputBox.textContent = finalResult + finalResult2;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Segment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            margin: 5px 0;
+            display: block;
+            text-align: left;
+        }
+
+        select, input, button {
+            padding: 10px;
+            margin-top: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: green;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .output-box {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            min-height: 50px;
+        }
+header {
+            background-color: #333;
+            color: white;
+            padding: 10px 0;
+        }
+        header nav ul {
+            list-style-type: none;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        header nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        header nav ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+<header>
+  <nav>
+    <ul>
+      <li><a href="0.html">Name</a></li>
+      <li><a href="1.html">ID & Telephone</a></li>
+      <li><a href="3.html">Address</a></li>
+      <li><a href="2.html">Account</a></li>
+    </ul>
+  </nav>
+</header>
+
+        <form id="combinedForm">
+            <!-- Identification Section -->
+            <h3>Identification Segment</h3>
+            <label for="idType">Select ID Type:</label>
+            <select id="idType">
+                <option value="none">None</option>
+                <option value="pan">Pan Card</option>
+                <option value="aadhaar">Aadhaar Card</option>
+            </select>
+
+            <div id="idNoSection">
+                <label for="idNumber">ID Number:</label>
+                <input type="text" id="idNumber" placeholder="Enter ID Number">
+                <div id="errorMessageId" class="error"></div>
+            </div>
+
+            <!-- Telephone Section -->
+            <h3>Telephone Segment</h3>
+            <label for="thirdSection">Enter Telephone number:</label>
+            <input type="text" id="thirdSection" placeholder="Enter number" maxlength="20">
+            <div id="errorMessageTel" class="error"></div>
+
+            <label for="sectionPanel">Select Telephone Type:</label>
+            <select id="sectionPanel">
+                <option value="00">Not Classified</option>
+                <option value="01">Mobile Phone</option>
+                <option value="02">Home Phone</option>
+                <option value="03">Office Phone</option>
+            </select>
+
+            <button type="button" onclick="generateCombinedOutput()">Generate</button>
+        </form>
+
+        <div id="outputBox" class="output-box"></div>
+    </div>
+
+   <script>
+        // Function to handle the change in ID type and update validation for Identification Segment
+        document.getElementById('idType').addEventListener('change', function() {
+            const idType = this.value;
+            const idNumberInput = document.getElementById('idNumber');
+            const errorMessage = document.getElementById('errorMessageId');
+            const outputBox = document.getElementById('outputBox');
+
+            errorMessage.textContent = ''; // Clear any previous error message
+            outputBox.textContent = ''; // Clear output box
+
+            // Reset the input field
+            idNumberInput.value = '';
+
+            if (idType === 'none') {
+                idNumberInput.disabled = true;
+                return;
+            }
+
+            idNumberInput.disabled = false;
+            idNumberInput.placeholder = idType === 'pan' ? 'Enter Pan Card Number' : 'Enter Aadhaar Card Number';
+        });
+
+        // Function to update the length of the 3rd section input for Telephone Segment
+        document.getElementById('thirdSection').addEventListener('input', function() {
+            const thirdSectionInput = document.getElementById('thirdSection').value;
+            const lengthSectionInput = document.getElementById('lengthSection');
+            lengthSectionInput.value = thirdSectionInput.length;
+        });
+
+        // Function to generate combined output
+        function generateCombinedOutput() {
+            const idType = document.getElementById('idType').value;
+            const idNumber = document.getElementById('idNumber').value;
+            const thirdSectionInput = document.getElementById('thirdSection').value;
+            const sectionPanel = document.getElementById('sectionPanel').value;
+            const errorMessageId = document.getElementById('errorMessageId');
+            const errorMessageTel = document.getElementById('errorMessageTel');
+            const outputBox = document.getElementById('outputBox');
+
+            // Clear previous error or output
+            errorMessageId.textContent = '';
+            errorMessageTel.textContent = '';
+            outputBox.textContent = '';
+
+            // Validation for Identification Segment
+            if (idType === 'none') {
+                errorMessageId.textContent = 'Please select an ID type.';
+                return;
+            }
+
+            // Validate input based on ID type (PAN or Aadhaar)
+            if (idType === 'pan') {
+                // PAN card validation: 10 characters, numbers and capital letters only
+                if (idNumber.length !== 10 || !/^[A-Z0-9]+$/.test(idNumber)) {
+                    errorMessageId.textContent = 'Wrong PAN number. It must be 10 characters containing only uppercase letters and numbers.';
+                    return;
+                }
+                outputBox.textContent +=`ID03I0101020110${idNumber}`;
+            } else if (idType === 'aadhaar') {
+                // Aadhaar card validation: 12 digits only
+                if (idNumber.length !== 12 || !/^\d+$/.test(idNumber)) {
+                    errorMessageId.textContent = 'Wrong Aadhaar number. It must be 12 digits and contain only numbers.';
+                    return;
+                }
+                outputBox.textContent +=`ID03I0101020612${idNumber}`;
+            }
+
+            // Validation for Telephone Segment
+            if (thirdSectionInput.length > 20) {
+                errorMessageTel.textContent = 'Error: Length of 3rd section must be 20 digits or less.';
+                return;
+            }
+
+            if (!/^\d+$/.test(thirdSectionInput)) {
+                errorMessageTel.textContent = 'Error: Only numbers are allowed in the 3rd section.';
+                return;
+            }
+
+            const fixedFirstSection ="PT03T0101";
+            const fixedFourthSection = "0302";
+
+            let sectionPanelCode = "00"; // Default: Not Classified
+            if (sectionPanel === "01") sectionPanelCode = "01"; // Mobile Phone
+            if (sectionPanel === "02") sectionPanelCode = "02"; // Home Phone
+            if (sectionPanel === "03") sectionPanelCode = "03"; // Office Phone
+
+            const finalOutput =`${fixedFirstSection}${thirdSectionInput.length}${thirdSectionInput}${fixedFourthSection}${sectionPanelCode}`;
+            outputBox.textContent +=`${finalOutput}\n`;
+        }
+    </script>
+
+
+</body>
+</html>
