@@ -207,14 +207,14 @@ header {
                     errorMessageId.textContent = 'Wrong PAN number. It must be 10 characters containing only uppercase letters and numbers.';
                     return;
                 }
-                outputBox.textContent +=`ID03I0101020110${idNumber}`;
+                outputBox.textContent +=`ID03I010102010210${idNumber}`;
             } else if (idType === 'aadhaar') {
                 // Aadhaar card validation: 12 digits only
                 if (idNumber.length !== 12 || !/^\d+$/.test(idNumber)) {
                     errorMessageId.textContent = 'Wrong Aadhaar number. It must be 12 digits and contain only numbers.';
                     return;
                 }
-                outputBox.textContent +=`ID03I0101020612${idNumber}`;
+                outputBox.textContent +=`ID03I010102060212${idNumber}`;
             }
 
             // Validation for Telephone Segment
