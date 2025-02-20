@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +59,25 @@
         button:hover {
             background-color: darkgreen;
         }
+.copy-button {
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            padding: 8px 16px;
+        }
 
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+
+        .copied-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+        }
         .output-box {
             margin-top: 15px;
             font-size: 16px;
@@ -234,7 +253,10 @@
             <button type="button" onclick="generateAddress()">Generate</button>
         </form>
 
-        <div id="outputBox" class="output-box"></div>
+ <div id="outputBox" class="output-box"></div>
+        <button id="copyButton" class="copy-button" style="display:none;" onclick="copyToClipboard()">Copy</button>
+        <div id="copiedMessage" class="copied-message" style="display:none;">Copied!</div>
+    
     </div>
 
     <script>
@@ -379,6 +401,20 @@ function generateAddress() {
 
     const outputBox = document.getElementById('outputBox');
     outputBox.textContent = finalResult + finalResult2;
+
+// Show the copy button
+            copyButton.style.display = 'inline-block';
+        }
+
+        // Function to copy the output to clipboard
+        function copyToClipboard() {
+            const outputText = document.getElementById('outputBox').textContent;
+            navigator.clipboard.writeText(outputText).then(function() {
+                const copiedMessage = document.getElementById('copiedMessage');
+                copiedMessage.style.display = 'inline'; // Show the copied message
+            }, function() {
+                alert('Failed to copy text');
+            });
 }
     </script>
 
