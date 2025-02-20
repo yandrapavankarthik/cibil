@@ -74,26 +74,51 @@
             border: 1px solid #ddd;
             min-height: 50px;
         }
-header {
+
+        .copy-button {
+            background-color: #007bff;
+            color: white;
+            font-size: 14px;
+            margin-top: 10px;
+            cursor: pointer;
+            border: none;
+            padding: 8px 16px;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+
+        .copied-message {
+            color: green;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        header {
             background-color: #333;
             color: white;
             padding: 10px 0;
         }
+
         header nav ul {
             list-style-type: none;
             text-align: center;
             margin: 0;
             padding: 0;
         }
+
         header nav ul li {
             display: inline;
             margin-right: 20px;
         }
+
         header nav ul li a {
             color: white;
             text-decoration: none;
             font-size: 18px;
         }
+
         header nav ul li a:hover {
             text-decoration: underline;
         }
@@ -102,16 +127,16 @@ header {
 <body>
 
     <div class="container">
-<header>
-  <nav>
-    <ul>
-      <li><a href="0.html">Name</a></li>
-      <li><a href="1.html">ID & Telephone</a></li>
-      <li><a href="3.html">Address</a></li>
-      <li><a href="2.html">Account</a></li>
-    </ul>
-  </nav>
-</header>
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="0.html">Name</a></li>
+                    <li><a href="1.html">ID & Telephone</a></li>
+                    <li><a href="3.html">Address</a></li>
+                    <li><a href="2.html">Account</a></li>
+                </ul>
+            </nav>
+        </header>
 
         <form id="combinedForm">
             <!-- Identification Section -->
@@ -147,9 +172,11 @@ header {
         </form>
 
         <div id="outputBox" class="output-box"></div>
+        <button id="copyButton" class="copy-button" style="display:none;" onclick="copyToClipboard()">Copy</button>
+        <div id="copiedMessage" class="copied-message" style="display:none;">Copied!</div>
     </div>
 
-   <script>
+    <script>
         // Function to handle the change in ID type and update validation for Identification Segment
         document.getElementById('idType').addEventListener('change', function() {
             const idType = this.value;
@@ -172,13 +199,6 @@ header {
             idNumberInput.placeholder = idType === 'pan' ? 'Enter Pan Card Number' : 'Enter Aadhaar Card Number';
         });
 
-        // Function to update the length of the 3rd section input for Telephone Segment
-        document.getElementById('thirdSection').addEventListener('input', function() {
-            const thirdSectionInput = document.getElementById('thirdSection').value;
-            const lengthSectionInput = document.getElementById('lengthSection');
-            lengthSectionInput.value = thirdSectionInput.length;
-        });
-
         // Function to generate combined output
         function generateCombinedOutput() {
             const idType = document.getElementById('idType').value;
@@ -188,11 +208,14 @@ header {
             const errorMessageId = document.getElementById('errorMessageId');
             const errorMessageTel = document.getElementById('errorMessageTel');
             const outputBox = document.getElementById('outputBox');
+            const copyButton = document.getElementById('copyButton');
+            const copiedMessage = document.getElementById('copiedMessage');
 
             // Clear previous error or output
             errorMessageId.textContent = '';
             errorMessageTel.textContent = '';
             outputBox.textContent = '';
+            copiedMessage.style.display = 'none'; // Hide the "Copied!" message
 
             // Validation for Identification Segment
             if (idType === 'none') {
@@ -238,9 +261,21 @@ header {
 
             const finalOutput =`${fixedFirstSection}${thirdSectionInput.length}${thirdSectionInput}${fixedFourthSection}${sectionPanelCode}`;
             outputBox.textContent +=`${finalOutput}\n`;
+
+            // Show the copy button
+            copyButton.style.display = 'inline-block';
+        }
+
+        // Function to copy the output to clipboard
+        function copyToClipboard() {
+            const outputText = document.getElementById('outputBox').textContent;
+            navigator.clipboard.writeText(outputText).then(function() {
+                const copiedMessage = document.getElementById('copiedMessage');
+                copiedMessage.style.display = 'inline'; // Show the copied message
+            }, function() {
+                alert('Failed to copy text');
+            });
         }
     </script>
-
-
 </body>
 </html>
