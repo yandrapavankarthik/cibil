@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -322,6 +324,12 @@
         <!-- Output Box -->
         
         <textarea id="outputBox" rows="4" cols="70" ></textarea>
+<!-- Copy Button -->
+<button type="button" id="copyButton" class="hidden" onclick="copyToClipboard()">Copy</button>
+
+<!-- Copied Message -->
+<p id="copiedMessage" class="hidden" style="color: green; font-weight: bold;">Copied!</p>
+
     </div>
 <div><p class="note">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;End of the cibil report use "TRLR"</p>
   </div>
@@ -375,8 +383,7 @@
                 error.classList.add('hidden');
             });
         }
-
-        function generateOutput() {
+function generateOutput() {
     const section0 = document.getElementById('section0').value; 
     const section2 = document.getElementById('section2').value;
     const section5 = document.getElementById('section5').value;
@@ -395,86 +402,104 @@
     const section27 = document.getElementById('section27').value;
     const section28 = document.getElementById('section28').value;
 
-            // Validation
-            let isValid = true;
-            if (!section2) {
-                document.getElementById('error-section2').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section2').classList.add('hidden');
-            }
-            if (!section5) {
-                document.getElementById('error-section5').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section5').classList.add('hidden');
-            }
-            if (!section7) {
-                document.getElementById('error-section7').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section7').classList.add('hidden');
-            }
-            if (!section9) {
-                document.getElementById('error-section9').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section9').classList.add('hidden');
-            }
-            if (!section11) {
-                document.getElementById('error-section11').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section11').classList.add('hidden');
-            }
-            if (!section13) {
-                document.getElementById('error-section13').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section13').classList.add('hidden');
-            }
-            if (!section16 || !/^\d+$/.test(section16)) {
-                document.getElementById('error-section16').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section16').classList.add('hidden');
-            }
-            if (!section19 || !/^\d+$/.test(section19)) {
-                document.getElementById('error-section19').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section19').classList.add('hidden');
-            }
-            if (!section22 || !/^\d+$/.test(section22)) {
-                document.getElementById('error-section22').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section22').classList.add('hidden');
-            }
-            if (!section25 || !/^\d+$/.test(section25)) {
-                document.getElementById('error-section25').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section25').classList.add('hidden');
-            }
-            if (!section28 || !/^\d+$/.test(section28)) {
-                document.getElementById('error-section28').classList.remove('hidden');
-                isValid = false;
-            } else {
-                document.getElementById('error-section28').classList.add('hidden');
-            }
+    // Validation
+    let isValid = true;
+    if (!section2) {
+        document.getElementById('error-section2').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section2').classList.add('hidden');
+    }
+    if (!section5) {
+        document.getElementById('error-section5').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section5').classList.add('hidden');
+    }
+    if (!section7) {
+        document.getElementById('error-section7').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section7').classList.add('hidden');
+    }
+    if (!section9) {
+        document.getElementById('error-section9').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section9').classList.add('hidden');
+    }
+    if (!section11) {
+        document.getElementById('error-section11').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section11').classList.add('hidden');
+    }
+    if (!section13) {
+        document.getElementById('error-section13').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section13').classList.add('hidden');
+    }
+    if (!section16 || !/^\d+$/.test(section16)) {
+        document.getElementById('error-section16').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section16').classList.add('hidden');
+    }
+    if (!section19 || !/^\d+$/.test(section19)) {
+        document.getElementById('error-section19').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section19').classList.add('hidden');
+    }
+    if (!section22 || !/^\d+$/.test(section22)) {
+        document.getElementById('error-section22').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section22').classList.add('hidden');
+    }
+    if (!section25 || !/^\d+$/.test(section25)) {
+        document.getElementById('error-section25').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section25').classList.add('hidden');
+    }
+    if (!section28 || !/^\d+$/.test(section28)) {
+        document.getElementById('error-section28').classList.remove('hidden');
+        isValid = false;
+    } else {
+        document.getElementById('error-section28').classList.add('hidden');
+    }
 
-            // If all fields are valid, generate output
-            if (isValid) {
-                const formattedDate7 = formatDate(section7);
-                const formattedDate9 = formatDate(section9);
-                const formattedDate11 = formatDate(section11);
-                const formattedDate13 = formatDate(section13);
+    // If all fields are valid, generate output
+    if (isValid) {
+        const formattedDate7 = formatDate(section7);
+        const formattedDate9 = formatDate(section9);
+        const formattedDate11 = formatDate(section11);
+        const formattedDate13 = formatDate(section13);
 
-                const output = `TL04T0010110NB955500010209YUVARAJFI03${section0}${section2}0402410501${section5}0808${formattedDate7}0908${formattedDate9}1008${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
-                document.getElementById('outputBox').value = output;
-            }
-        }
+        const output = `TL04T0010110NB955500010209YUVARAJFI03${section0}${section2}0402410501${section5}0808${formattedDate7}0908${formattedDate9}1008${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
+        document.getElementById('outputBox').value = output;
+
+        // Show the Copy Button after generating the output
+        document.getElementById('copyButton').classList.remove('hidden');
+    }
+}
+
+function copyToClipboard() {
+    const outputBox = document.getElementById('outputBox');
+    outputBox.select();
+    document.execCommand('copy');
+
+    // Show the Copied Message
+    const copiedMessage = document.getElementById('copiedMessage');
+    copiedMessage.classList.remove('hidden');
+
+    // Hide the Copied Message after 2 seconds
+    setTimeout(function() {
+        copiedMessage.classList.add('hidden');
+    }, 2000);
+}
     </script>
 </body>
 </html>
