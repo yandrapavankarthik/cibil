@@ -13,7 +13,6 @@
             height: 100vh;
             margin: 0;
             background-color: #f4f4f4;
-
         }
 
         header {
@@ -125,43 +124,60 @@
             min-height: 50px;
         }
 
-        /* Style to display buttons side by side */
         .button-container-inline {
             display: flex;
             justify-content: space-between;
-            gap: 10px; /* Optional gap between buttons */
-            margin-top: 10px; /* Optional space above the buttons */
+            gap: 10px;
+            margin-top: 10px;
         }
-pre {
-    background-color: #f1f1f1; /* Light gray background */
-    padding: 10px; /* Adds space around the text */
-    border-radius: 4px; /* Rounded corners for the box */
-    border: 1px solid #ddd; /* Light border around the box */
-    min-height: 10px; /* Ensures it always has a minimum height */
-    white-space: pre-wrap; /* Ensures long lines wrap to the next line */
-    word-wrap: break-word; /* Prevents content overflow */
-    max-width: 100%; /* Ensure it doesn't overflow outside the container */
-    box-sizing: border-box; /* Make sure padding is included in width */
-    overflow: auto; /* Add scrollbars if content is too large */
-    
-text-align: left;
-}
-     .note {
-    font-weight: bold;           /* Makes the text bold */
-    text-transform: uppercase;   /* Makes all letters capitalized */
-    color: #999;                 /* Light gray color */
-    font-size: 16px;             /* Optional: Set a font size to make it look like a note */
-    font-family: Arial, sans-serif; /* Optional: Choose a clear font */
-    margin-bottom: 10px;         /* Optional: Adds some space below */
-}
+        
+        pre {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            min-height: 10px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-width: 100%;
+            box-sizing: border-box;
+            overflow: auto;
+            text-align: left;
+        }
+
+        .note {
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #999;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .copy-button {
+            margin-top: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
 
     </style>
 </head>
 <body>
 <div class="container">
-  <div><p class="note">Starting of the cibil report</p>
-    <pre>TUDF12NB95550001                    YUVARAJFI0      0100000000                              L00000                                             
-</div>
+    <div><p class="note">Starting of the cibil report</p>
+        <pre id="cibilReportText">TUDF12NB95550001                    YUVARAJFI0      0100000000                              L00000                                              
+</pre>
+        <button id="copyPreButton" class="copy-button" onclick="copyPreToClipboard()">Copy</button>
+        <span id="copyMessage" style="color: green; display: none;">Copied!</span>
+    </div>
     <header>
         <nav>
             <ul>
@@ -177,7 +193,6 @@ text-align: left;
     <input type="text" id="name" placeholder="Enter your name">
     <span id="errorName" class="error"></span>
 
-    <!-- Wrap the buttons in a container to align them horizontally -->
     <div class="button-container-inline">
         <button onclick="addSecondNameField()">ADD Second</button>
         <button onclick="addThirdNameField()">ADD Third</button>
@@ -186,7 +201,6 @@ text-align: left;
     <div id="secondNameContainer"></div>
     <div id="thirdNameContainer"></div>
 
-    <!-- Form Row for Select Date and Select Gender (Reversed order) -->
     <div class="form-row">
         <div>
             <label for="date">Select Date:</label>
@@ -208,6 +222,8 @@ text-align: left;
     </div>
 
     <div id="output" class="output-box"></div>
+    <button id="copyButton" class="copy-button" style="display: none;" onclick="copyToClipboard()">Copy</button>
+</div>
 
 <script>
     function addSecondNameField() {
@@ -287,20 +303,48 @@ text-align: left;
         }
 
         let output = `PN03N0101${formattedLength}${name}${secondNameSegment}${thirdNameSegment}0708${formattedDate}0801${gender}`;
+
+        // Ensure 146 bytes in the output
+        while (output.length < 146) {
+            output += ' '; // Add spaces to make the length 146 bytes
+        }
+
         document.getElementById("output").innerText = output;
+        document.getElementById("copyButton").style.display = 'inline-block'; // Show the copy button
     }
 
     function resetForm() {
-        // Reset all input fields
         document.getElementById("name").value = '';
         document.getElementById("date").value = '';
-        document.getElementById("gender").value = '1'; // Default to Female
+        document.getElementById("gender").value = '1'; 
         document.getElementById("output").innerText = '';
         document.getElementById("secondNameContainer").innerHTML = '';
         document.getElementById("thirdNameContainer").innerHTML = '';
         document.getElementById("errorName").innerText = '';
         document.getElementById("errorSecondName").innerText = '';
         document.getElementById("errorThirdName").innerText = '';
+        document.getElementById("copyButton").style.display = 'none'; // Hide the copy button
+    }
+
+    function copyToClipboard() {
+        let cibilText = document.getElementById("output").innerText;
+        
+        navigator.clipboard.writeText(cibilText)
+            .then(() => alert("Copied to clipboard!"))
+            .catch(err => alert("Error copying text: " + err));
+    }
+
+    function copyPreToClipboard() {
+        let cibilText = document.getElementById("cibilReportText").innerText;
+        
+        navigator.clipboard.writeText(cibilText)
+            .then(() => {
+                document.getElementById("copyMessage").style.display = 'inline';
+                setTimeout(() => {
+                    document.getElementById("copyMessage").style.display = 'none';
+                }, 2000);
+            })
+            .catch(err => alert("Error copying text: " + err));
     }
 </script>
 </body>
