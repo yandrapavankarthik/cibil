@@ -176,12 +176,13 @@
         <h2>Accounts Segment</h2>
         <form id="form">
             <!-- 1st section (fixed) -->
-            <input type="text" id="section1" value="TL04T0010110NB955500010209YUVARAJFI0315" class="hidden">
+            <input type="text" id="section1" value="TL04T0010110NB955500010209YUVARAJFI03" class="hidden">
+          <input type="text" id="section0" readonly class="hidden">
 
             <!-- 2nd section (input: 15 bytes, numbers only) -->
             <div class="form-group">
                 <label for="section2">LOAN ID:</label>
-                <input type="text" id="section2" required><br>
+                <input type="text" id="section2" required oninput="updateSection0()"><br>
                 <span id="error-section2" class="error hidden">This field is required.</span>
             </div>
 
@@ -332,7 +333,11 @@
             const year = d.getFullYear();
             return day + month + year;
         }
-
+      function updateSection0() {
+    const section2Value = document.getElementById('section2').value;
+    const section2Length = section2Value.length.toString().padStart(2, '0'); // Length padded to 2 digits
+    document.getElementById('section0').value = section2Length; // Set section0 value
+       } 
         function updateSection15() {
             const section16Value = document.getElementById('section16').value;
             const section15Length = section16Value.length.toString().padStart(2, '0');
@@ -372,22 +377,23 @@
         }
 
         function generateOutput() {
-            const section2 = document.getElementById('section2').value;
-            const section5 = document.getElementById('section5').value;
-            const section7 = document.getElementById('section7').value;
-            const section9 = document.getElementById('section9').value;
-            const section11 = document.getElementById('section11').value;
-            const section13 = document.getElementById('section13').value;
-            const section15 = document.getElementById('section15').value;
-            const section16 = document.getElementById('section16').value;
-            const section18 = document.getElementById('section18').value;
-            const section19 = document.getElementById('section19').value;
-            const section21 = document.getElementById('section21').value;
-            const section22 = document.getElementById('section22').value;
-            const section24 = document.getElementById('section24').value;
-            const section25 = document.getElementById('section25').value;
-            const section27 = document.getElementById('section27').value;
-            const section28 = document.getElementById('section28').value;
+    const section0 = document.getElementById('section0').value; 
+    const section2 = document.getElementById('section2').value;
+    const section5 = document.getElementById('section5').value;
+    const section7 = document.getElementById('section7').value;
+    const section9 = document.getElementById('section9').value;
+    const section11 = document.getElementById('section11').value;
+    const section13 = document.getElementById('section13').value;
+    const section15 = document.getElementById('section15').value;
+    const section16 = document.getElementById('section16').value;
+    const section18 = document.getElementById('section18').value;
+    const section19 = document.getElementById('section19').value;
+    const section21 = document.getElementById('section21').value;
+    const section22 = document.getElementById('section22').value;
+    const section24 = document.getElementById('section24').value;
+    const section25 = document.getElementById('section25').value;
+    const section27 = document.getElementById('section27').value;
+    const section28 = document.getElementById('section28').value;
 
             // Validation
             let isValid = true;
@@ -465,7 +471,7 @@
                 const formattedDate11 = formatDate(section11);
                 const formattedDate13 = formatDate(section13);
 
-                const output = `TL04T0010110NB955500010209YUVARAJFI0315${section2}0402410501${section5}0808${formattedDate7}0908${formattedDate9}1008${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
+                const output = `TL04T0010110NB955500010209YUVARAJFI03${section0}${section2}0402410501${section5}0808${formattedDate7}0908${formattedDate9}1008${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
                 document.getElementById('outputBox').value = output;
             }
         }
