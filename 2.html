@@ -181,7 +181,7 @@
             <!-- 2nd section (input: 15 bytes, numbers only) -->
             <div class="form-group">
                 <label for="section2">LOAN ID:</label>
-                <input type="text" id="section2" maxlength="15" pattern="\d*" required><br>
+                <input type="text" id="section2" required><br>
                 <span id="error-section2" class="error hidden">This field is required and should be numeric.</span>
             </div>
 
@@ -391,7 +391,7 @@
 
             // Validation
             let isValid = true;
-            if (!section2 || !/^\d+$/.test(section2)) {
+            if (!section2) {
                 document.getElementById('error-section2').classList.remove('hidden');
                 isValid = false;
             } else {
