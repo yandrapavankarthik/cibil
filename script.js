@@ -24,7 +24,7 @@ document.getElementById("login-form").addEventListener("submit", function(event)
     errorMessage.textContent = "";
 
     // Validate if username and password are correct
-    if (username ==="karthik" && password) {
+    if (username ==="Karthik" && password ==="password") {
         // Redirect to the page after successful login
         window.location.href = "0.html";
     } else {
