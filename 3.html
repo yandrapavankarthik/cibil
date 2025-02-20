@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -237,148 +238,148 @@
     </div>
 
     <script>
-        // Function to show the input field for the selected address
-        function showAddressInput(addressType) {
-            // Hide all address input fields
-            document.querySelectorAll('.address-input-container').forEach((el) => {
-                el.classList.remove('active');
-            });
+       // Function to show the input field for the selected address
+function showAddressInput(addressType) {
+    // Hide all address input fields
+    document.querySelectorAll('.address-input-container').forEach((el) => {
+        el.classList.remove('active');
+    });
 
-            // Show the selected address input field
-            if (addressType === 1) {
-                document.getElementById('address1Input').classList.add('active');
-            } else if (addressType === 2) {
-                document.getElementById('address2Input').classList.add('active');
-            } else if (addressType === 3) {
-                document.getElementById('address3Input').classList.add('active');
-            }
+    // Show the selected address input field
+    if (addressType === 1) {
+        document.getElementById('address1Input').classList.add('active');
+    } else if (addressType === 2) {
+        document.getElementById('address2Input').classList.add('active');
+    } else if (addressType === 3) {
+        document.getElementById('address3Input').classList.add('active');
+    }
+}
+
+// Function to filter region options based on input
+function filterRegion() {
+    const searchValue = document.getElementById("regionSearch").value.toLowerCase();
+    const options = document.getElementById("region").options;
+    for (let i = 0; i < options.length; i++) {
+        const optionText = options[i].text.toLowerCase();
+        options[i].style.display = optionText.includes(searchValue) ? "" : "none";
+    }
+}
+
+// Function to format the address and generate the final result
+function formatAddress(address) {
+    // Check if address is empty
+    if (!address) {
+        return '';
+    }
+
+    // Replace symbols (dashes, slashes, etc.) with a space
+    const filteredAddress = address.replace(/[^a-zA-Z0-9\s]/g, ' ');
+
+    // Split the address into words
+    const words = filteredAddress.split(/\s+/);
+
+    let formattedAddress = '';
+    let currentLength = 0;
+
+    // Add words to the formatted address until it reaches 40 bytes
+    for (let i = 0; i < words.length; i++) {
+        // Check if adding this word exceeds 40 bytes
+        if ((currentLength + words[i].length + (formattedAddress ? 1 : 0)) <= 40) {
+            // If it fits, add it to the formatted address
+            formattedAddress += (formattedAddress ? ' ' : '') + words[i];
+            currentLength += words[i].length + (formattedAddress ? 1 : 0); // 1 for the space
+        } else {
+            // If adding the next word exceeds 40 bytes, stop
+            break;
         }
+    }
 
-        // Function to filter region options based on input
-        function filterRegion() {
-            const searchValue = document.getElementById("regionSearch").value.toLowerCase();
-            const options = document.getElementById("region").options;
-            for (let i = 0; i < options.length; i++) {
-                const optionText = options[i].text.toLowerCase();
-                options[i].style.display = optionText.includes(searchValue) ? "" : "none";
-            }
-        }
+    // If the formatted address is less than 40 bytes, fill with spaces
+    if (currentLength < 40) {
+        formattedAddress = formattedAddress.padEnd(40, ' ');
+    }
 
-        // Function to format the address and generate the final result
-        function formatAddress(address) {
-            // Check if address is empty
-            if (!address) {
-                return '';
-            }
+    return formattedAddress;
+}
 
-            // Remove special characters (commas, slashes, dashes, etc.)
-            const filteredAddress = address.replace(/[^a-zA-Z0-9\s]/g, '');
+// Main function to generate the complete address
+function generateAddress() {
+    const fixedPart1 = "PA03A010140";  // Fixed first section
+    const fixedPart2 = "0240"; // Address 2 fixed part
+    const fixedPart3 = "0340"; // Address 3 fixed part
 
-            // Split the address into words
-            const words = filteredAddress.split(/\s+/);
+    // Get the addresses
+    const address1 = document.getElementById('address1').value.trim();
+    const address2 = document.getElementById('address2').value.trim();
+    const address3 = document.getElementById('address3').value.trim();
 
-            let formattedAddress = '';
-            let currentLength = 0;
+    // Format the addresses
+    const formattedAddress1 = formatAddress(address1);
+    const formattedAddress2 = formatAddress(address2);
+    const formattedAddress3 = formatAddress(address3);
 
-            // Add words to the formatted address until it reaches 40 bytes
-            for (let i = 0; i < words.length; i++) {
-                // Check if adding this word exceeds 40 bytes
-                if ((currentLength + words[i].length + (formattedAddress ? 1 : 0)) <= 40) {
-                    // If it fits, add it to the formatted address
-                    formattedAddress += (formattedAddress ? ' ' : '') + words[i];
-                    currentLength += words[i].length + (formattedAddress ? 1 : 0); // 1 for the space
-                } else {
-                    // If adding the next word exceeds 40 bytes, stop
-                    break;
-                }
-            }
+    // Error check to ensure at least one address is entered
+    if (!formattedAddress1) return;
 
-            // If the formatted address is less than 40 bytes, fill with spaces
-            if (currentLength < 40) {
-                formattedAddress = formattedAddress.padEnd(40, ' ');
-            }
+    let finalResult = fixedPart1 + formattedAddress1; // Address 1
 
-            return formattedAddress;
-        }
+    if (formattedAddress2) {
+        finalResult += fixedPart2 + formattedAddress2; // Address 2
+    }
+    if (formattedAddress3) {
+        finalResult += fixedPart3 + formattedAddress3; // Address 3
+    }
 
-        // Main function to generate the complete address
-        function generateAddress() {
-            const fixedPart1 = "PA03A010140";  // Fixed first section
-            const fixedPart2 = "0240"; // Address 2 fixed part
-            const fixedPart3 = "0340"; // Address 3 fixed part
+    // Get the values for region and fifth input
+    const region = document.getElementById('region').value;
+    const fifthInput = document.getElementById('fifthInput').value.trim();
+    const addressType = document.getElementById('addressType').value;
 
-            // Get the addresses
-            const address1 = document.getElementById('address1').value.trim();
-            const address2 = document.getElementById('address2').value.trim();
-            const address3 = document.getElementById('address3').value.trim();
+    // Validate fifth input to ensure it's a number and has a length of 6
+    if (!/^\d{6}$/.test(fifthInput)) {
+        alert('Please enter exactly 6 digits for the 5th section.');
+        return;
+    }
 
-            // Format the addresses
-            const formattedAddress1 = formatAddress(address1);
-            const formattedAddress2 = formatAddress(address2);
-            const formattedAddress3 = formatAddress(address3);
+    // Validate length of the fifth input (cannot be more than 10 characters)
+    if (fifthInput.length > 10) {
+        alert('Input for the 5th section cannot be more than 10 characters.');
+        return;
+    }
 
-            // Error check to ensure at least one address is entered
-            if (!formattedAddress1) return;
+    const fifthSectionLength = fifthInput.length.toString().padStart(2, '0');
+    let addressTypeCode = '';
 
-            let finalResult = fixedPart1 + formattedAddress1; // Address 1
+    switch (addressType) {
+        case '01':
+            addressTypeCode = '01'; // Permanent Address
+            break;
+        case '02':
+            addressTypeCode = '02'; // Residence Address
+            break;
+        case '03':
+            addressTypeCode = '03'; // Office Address
+            break;
+        case '04':
+            addressTypeCode = '04'; // Not Categorized
+            break;
+        case '05':
+            addressTypeCode = '05'; // Mortgage Property Address
+            break;
+        default:
+            addressTypeCode = '00'; // Default case, should not happen
+            break;
+    }
 
-            if (formattedAddress2) {
-                finalResult += fixedPart2 + formattedAddress2; // Address 2
-            }
-            if (formattedAddress3) {
-                finalResult += fixedPart3 + formattedAddress3; // Address 3
-            }
+    // Final result string
+    const fixedPart1_2 = "0602";
+    const fixedPart2_2 = "07";
+    const fixedPart3_2 = "0802";
+    const finalResult2 = `${fixedPart1_2}${region}${fixedPart2_2}${fifthSectionLength}${fifthInput}${fixedPart3_2}${addressTypeCode}`;
 
-            // Get the values for region and fifth input
-            const region = document.getElementById('region').value;
-            const fifthInput = document.getElementById('fifthInput').value.trim();
-            const addressType = document.getElementById('addressType').value;
-
-            // Validate fifth input to ensure it's a number and has a length of 6
-            if (!/^\d{6}$/.test(fifthInput)) {
-                alert('Please enter exactly 6 digits for the 5th section.');
-                return;
-            }
-
-            // Validate length of the fifth input (cannot be more than 10 characters)
-            if (fifthInput.length > 10) {
-                alert('Input for the 5th section cannot be more than 10 characters.');
-                return;
-            }
-
-            const fifthSectionLength = fifthInput.length.toString().padStart(2, '0');
-            let addressTypeCode = '';
-
-            switch (addressType) {
-                case '01':
-                    addressTypeCode = '01'; // Permanent Address
-                    break;
-                case '02':
-                    addressTypeCode = '02'; // Residence Address
-                    break;
-                case '03':
-                    addressTypeCode = '03'; // Office Address
-                    break;
-                case '04':
-                    addressTypeCode = '04'; // Not Categorized
-                    break;
-                case '05':
-                    addressTypeCode = '05'; // Mortgage Property Address
-                    break;
-                default:
-                    addressTypeCode = '00'; // Default case, should not happen
-                    break;
-            }
-
-            // Final result string
-            const fixedPart1_2 = "0602";
-            const fixedPart2_2 = "07";
-            const fixedPart3_2 = "0802";
-            const finalResult2 = `${fixedPart1_2}${region}${fixedPart2_2}${fifthSectionLength}${fifthInput}${fixedPart3_2}${addressTypeCode}`;
-
-            const outputBox = document.getElementById('outputBox');
-            outputBox.textContent = finalResult + finalResult2;
-        }
+    const outputBox = document.getElementById('outputBox');
+    outputBox.textContent = finalResult + finalResult2;
+}
     </script>
 
 </body>
