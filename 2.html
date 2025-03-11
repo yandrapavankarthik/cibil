@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -389,7 +390,7 @@ function generateOutput() {
     const section5 = document.getElementById('section5').value;
     const section7 = document.getElementById('section7').value;
     const section9 = document.getElementById('section9').value;
-    const section11 = document.getElementById('section11').value;
+    const section11 = document.getElementById('section11').value; // Date field
     const section13 = document.getElementById('section13').value;
     const section15 = document.getElementById('section15').value;
     const section16 = document.getElementById('section16').value;
@@ -402,7 +403,10 @@ function generateOutput() {
     const section27 = document.getElementById('section27').value;
     const section28 = document.getElementById('section28').value;
 
-    // Validation
+    // Retrieve section10 value (fixed value of 1008)
+    const section10 = document.getElementById('section10').value;
+
+    // Validation (same as before)
     let isValid = true;
     if (!section2) {
         document.getElementById('error-section2').classList.remove('hidden');
@@ -427,12 +431,6 @@ function generateOutput() {
         isValid = false;
     } else {
         document.getElementById('error-section9').classList.add('hidden');
-    }
-    if (!section11) {
-        document.getElementById('error-section11').classList.remove('hidden');
-        isValid = false;
-    } else {
-        document.getElementById('error-section11').classList.add('hidden');
     }
     if (!section13) {
         document.getElementById('error-section13').classList.remove('hidden');
@@ -475,17 +473,22 @@ function generateOutput() {
     if (isValid) {
         const formattedDate7 = formatDate(section7);
         const formattedDate9 = formatDate(section9);
-        const formattedDate11 = formatDate(section11);
         const formattedDate13 = formatDate(section13);
 
-        const output = `TL04T0010110NB955500010209YUVARAJFI03${section0}${section2}0402050501${section5}0808${formattedDate7}0908${formattedDate9}1008${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
+        // If section11 is provided, format it, otherwise leave it blank
+        const formattedDate11 = section11 ? formatDate(section11) : '';
+
+        // If section11 has a date, include section10 value (1008), else do not
+        const section10Value = section11 ? section10 : ''; // Only include section10 value if section11 is filled
+
+        const output = `TL04T0010110NB955500010209YUVARAJFI03${section0}${section2}0402050501${section5}0808${formattedDate7}0908${formattedDate9}${section10Value}${formattedDate11}1108${formattedDate13}12${section15}${section16}13${section18}${section19}14${section21}${section22}15${section24}${section25}40${section27}${section28}ES02**`;
+        
         document.getElementById('outputBox').value = output;
 
         // Show the Copy Button after generating the output
         document.getElementById('copyButton').classList.remove('hidden');
     }
 }
-
 function copyToClipboard() {
     const outputBox = document.getElementById('outputBox');
     outputBox.select();
