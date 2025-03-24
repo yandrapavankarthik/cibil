@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -324,18 +322,17 @@ function formatAddress(address) {
     return formattedAddress;
 }
 
-// Main function to generate the complete address
 function generateAddress() {
-    const fixedPart1 = "PA03A010140";  // Fixed first section
-    const fixedPart2 = "0240"; // Address 2 fixed part
-    const fixedPart3 = "0340"; // Address 3 fixed part
+    const fixedPart1 = "0140";  // Fixed for Address 1
+    const fixedPart2 = "02";  // Fixed for Address 2
+    const fixedPart3 = "03";  // Fixed for Address 3
 
     // Get the addresses
     const address1 = document.getElementById('address1').value.trim();
     const address2 = document.getElementById('address2').value.trim();
     const address3 = document.getElementById('address3').value.trim();
 
-    // Format the addresses
+    // Format the addresses (Address 1 and Address 3 will follow the same pattern as Address 2)
     const formattedAddress1 = formatAddress(address1);
     const formattedAddress2 = formatAddress(address2);
     const formattedAddress3 = formatAddress(address3);
@@ -345,11 +342,18 @@ function generateAddress() {
 
     let finalResult = fixedPart1 + formattedAddress1; // Address 1
 
+    // Process Address 2
     if (formattedAddress2) {
-        finalResult += fixedPart2 + formattedAddress2; // Address 2
+        const cleanedAddress2 = address2.replace(/[^a-zA-Z0-9\s]/g, '');  // Remove special characters
+        const address2Length = cleanedAddress2.length.toString().padStart(2, '0');  // Get length, ensure 2 digits
+        finalResult += fixedPart2 + address2Length + cleanedAddress2; // Address 2
     }
+
+    // Process Address 3
     if (formattedAddress3) {
-        finalResult += fixedPart3 + formattedAddress3; // Address 3
+        const cleanedAddress3 = address3.replace(/[^a-zA-Z0-9\s]/g, '');  // Remove special characters
+        const address3Length = cleanedAddress3.length.toString().padStart(2, '0');  // Get length, ensure 2 digits
+        finalResult += fixedPart3 + address3Length + cleanedAddress3; // Address 3
     }
 
     // Get the values for region and fifth input
@@ -393,7 +397,7 @@ function generateAddress() {
             break;
     }
 
-    // Final result string
+    // Final result string for region, pincode, and address type
     const fixedPart1_2 = "0602";
     const fixedPart2_2 = "07";
     const fixedPart3_2 = "0802";
@@ -402,9 +406,10 @@ function generateAddress() {
     const outputBox = document.getElementById('outputBox');
     outputBox.textContent = finalResult + finalResult2;
 
-// Show the copy button
-            copyButton.style.display = 'inline-block';
-        }
+    // Show the copy button
+    const copyButton = document.getElementById('copyButton');
+    copyButton.style.display = 'inline-block';
+}
 
         // Function to copy the output to clipboard
         function copyToClipboard() {
